@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ContributorProfile extends Model
+class SubCategory extends Model
 {
-    protected $guarded=[];
+    //
 }

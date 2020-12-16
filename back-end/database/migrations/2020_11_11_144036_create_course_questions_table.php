@@ -15,6 +15,9 @@ class CreateCourseQuestionsTable extends Migration
     {
         Schema::create('course_questions', function (Blueprint $table) {
             $table->id();
+            $table->text('question_body');
+            $table->json('question_options');
+            $table->text('question_answers');
             $table->timestamps();
         });
     }

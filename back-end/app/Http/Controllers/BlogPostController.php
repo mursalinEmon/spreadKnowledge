@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BlogPost;
+use App\BlogTag;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,9 @@ class BlogPostController extends Controller
      */
     public function index()
     {
-        //
+        $tags=BlogTag::all();
+
+        return response(["tags"=>$tags]);
     }
 
     /**

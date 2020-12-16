@@ -33,7 +33,12 @@ Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead);
 import VueSimpleAlert from "vue-simple-alert";
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 import 'bootstrap/scss/bootstrap.scss';
+import VueToastr2 from 'vue-toastr-2'
+import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 
+window.toastr = require('toastr')
+
+Vue.use(VueToastr2)
 Vue.use(VueSimpleAlert);
 Vue.use(VueBootstrapTypeahead);
 

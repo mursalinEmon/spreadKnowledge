@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class BlogTagController extends Controller
 {
+    public function all_tags(){
+        $tags=BlogTag::all();
+        return view('Blogs.blogTagslist',compact('tags'));
+    }
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +33,7 @@ class BlogTagController extends Controller
      */
     public function create()
     {
-        //
+       return view('Blogs.createTags');
     }
 
     /**
@@ -40,7 +44,11 @@ class BlogTagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tag=BlogTag::create([
+            'name'=>$request->title,
+            'description'=>$request->description,
+        ]);
+        return response(['message'=>"Tag Created Successfully"]);
     }
 
     /**
@@ -62,7 +70,7 @@ class BlogTagController extends Controller
      */
     public function edit(BlogTag $blogTag)
     {
-        //
+        return view('Blogs.blogTagsEdit',compact('blogTag'));
     }
 
     /**
@@ -72,11 +80,21 @@ class BlogTagController extends Controller
      * @param  \App\BlogTag  $blogTag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BlogTag $blogTag)
+    public function update(Request $request)
     {
-        //
-    }
 
+        $blogTag=BlogTag::findOrFail($request->id);
+        $blogTag->update([
+            'name'=>$request->title,
+            'description'=>$request->description,
+        ]);
+        return response(['message'=>"Tag updated Successfully..!"]);
+    }
+    public function delete_tag(Request $request){
+        $tag=BlogTag::findOrFail($request->id);
+        $tag->delete();
+        return redirect()->back();
+    }
     /**
      * Remove the specified resource from storage.
      *

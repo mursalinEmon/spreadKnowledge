@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
-use App\StudentProfile;
+use App\Category;
+use App\SubCategory;
 use Illuminate\Http\Request;
 
-class StudentProfileController extends Controller
+class SubCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,13 @@ class StudentProfileController extends Controller
      */
     public function index()
     {
-        return view('student.student_dashboard');
+        $subCategories=SubCategory::all();
+     return response($subCategories);
+
+    }
+    public function find_sub($id){
+        $data=SubCategory::where('category_id',$id)->get();
+        return response($data);
     }
 
     /**
@@ -42,10 +48,10 @@ class StudentProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\StudentProfile  $studentProfile
+     * @param  \App\SubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(StudentProfile $studentProfile)
+    public function show(SubCategory $subCategory)
     {
         //
     }
@@ -53,10 +59,10 @@ class StudentProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\StudentProfile  $studentProfile
+     * @param  \App\SubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(StudentProfile $studentProfile)
+    public function edit(SubCategory $subCategory)
     {
         //
     }
@@ -65,10 +71,10 @@ class StudentProfileController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\StudentProfile  $studentProfile
+     * @param  \App\SubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StudentProfile $studentProfile)
+    public function update(Request $request, SubCategory $subCategory)
     {
         //
     }
@@ -76,30 +82,11 @@ class StudentProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\StudentProfile  $studentProfile
+     * @param  \App\SubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StudentProfile $studentProfile)
+    public function destroy(SubCategory $subCategory)
     {
         //
-    }
-    public function enroll_course($course_id){
-        $course=Course::findOrFail($course_id);
-        $student=StudentProfile::where('user_id',auth()->user()->id)->get()->first();
-        $enrolled_courses=$student->enrolled_courses;
-        Array_push($enrolled_courses,$course->id);
-
-        $student_count=$course->student_count;
-        $student_count ++;
-        $course->update([
-            'student_count' => $student_count,
-        ]);
-        $student->update([
-            'enrolled_courses'=>$enrolled_courses,
-        ]);
-
-        return back()->with(['message'=>'enrolled successfully']);
-
-
     }
 }
