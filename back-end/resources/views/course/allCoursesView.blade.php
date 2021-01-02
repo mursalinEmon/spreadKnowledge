@@ -41,6 +41,7 @@
                     @method('delete')
                     <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
+                    <a href="{{ route('course.edit',$item->id) }}" class="btn btn-warning ml-2 mr-2">Edit</a>
                     <a href="{{ route('lesson.list',$item->id) }}" class="btn btn-success">Browse</a>
 
                 </div>

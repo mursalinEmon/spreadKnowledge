@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Category;
+use App\SubCategory;
 use App\CourseLesson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+
 
 class CourseController extends Controller
 {
@@ -90,7 +93,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+
+        return view('course.courseEdit',compact('course'));
     }
 
     /**
@@ -100,9 +104,48 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
+
+    // "title" => "num"
+    // "tags" => "["ewrwer","test","assd"]"
+    // "level" => "beginner"
+    // "category_id" => "1"
+    // "sub_category" => "php"
     public function update(Request $request, Course $course)
     {
-        //
+
+        $sub_cat=null;
+        $imageName=null;
+        if($request->sub_category){
+        $sub_cat=SubCategory::where('name',$request->sub_category)->pluck('id');
+
+
+        }
+        $sub_category_id = $sub_cat[0] ? $sub_cat[0]: $course->sub_category_id;
+
+
+        if($request->file('file')){
+            $image = $request->file;
+            $imagePath = $request->file('file');
+            $imageName=$imagePath->getClientOriginalName();
+            $image->move(public_path('image/'.auth()->user()->name.'/'),$imageName);
+            File::delete( public_path($course->image));
+
+        }
+        $db_image= $imageName ? 'image/'.auth()->user()->name.'/'.$imageName :  $course->image;
+
+        $course->update([
+            'course_title' => $request->title,
+            'tags'=>$request->tags,
+            'course_level'=>$request->level,
+            'category_id' =>$request->category_id,
+            'sub_category_id'=>$sub_category_id,
+            'image' => $db_image,
+
+
+        ]);
+
+        return response(['message'=>'Post Updated SuccessFully']);
+
     }
 
     /**
