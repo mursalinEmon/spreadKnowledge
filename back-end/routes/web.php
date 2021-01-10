@@ -89,7 +89,7 @@ Route::middleware(['verified'])->group(function(){
 });
 
 
-
+Route::get('/apriori','CourseController@apriori');
 Route::get('/contributor_dashboard','HomeController@contributor_dashboard')->name('contributor_dashboard');
 Route::get('/student-dashboard','StudentProfileController@index')->name('student.dashboard');
 Route::get('/courses','CourseController@index')->name('courses.view');

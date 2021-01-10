@@ -6,7 +6,10 @@ use App\Course;
 use App\Category;
 use App\SubCategory;
 use App\CourseLesson;
+use App\StudentProfile;
 use Illuminate\Http\Request;
+use Phpml\Association\Apriori;
+
 use Illuminate\Support\Facades\File;
 
 
@@ -175,5 +178,42 @@ class CourseController extends Controller
         return view('student.courseLessonsView',compact('selected_course_lessons'));
 
     }
+    public function apriori(){
+        $course_list=array();
+        $courses=Course::get(['id','course_title']);
+        foreach($courses as $course){
+            // array_push($course_list,[$course->id => $course->course_title]);
+            $course_list[$course->id]=$course->course_title;
+        }
+        $enrolled=StudentProfile::get('enrolled_courses');
+        $enrolled_courses=array();
+        foreach( $enrolled as $courses ){
+            $temp=$courses->enrolled_courses;
+            // dd($temp[0]);
+            $temp_arr=array();
+            foreach($temp as $t){
 
+                foreach($course_list as $key=>$value){
+                    // dd($key,$temp);
+                    if ($t == $key){
+                        $t=$value;
+                        array_push($temp_arr,$t);
+                    }
+                }
+            }
+            array_push($enrolled_courses,$temp_arr);
+            $temp_arr=[];
+        }
+        // dd($enrolled_courses);
+
+        $associator = new Apriori($support = 0.2, $confidence = 0.5);
+        $samples = $enrolled_courses;
+        // $samples = [['alpha', 'beta', 'epsilon'], ['alpha', 'beta', 'theta'], ['alpha', 'beta', 'epsilon'], ['alpha', 'beta', 'theta']];
+        $labels  = [];
+        $associator->train($samples, $labels);
+        $rules=$associator->getRules();
+        dd($rules);
+
+
+    }
 }
