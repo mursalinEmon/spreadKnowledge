@@ -256,7 +256,7 @@
         <!-- End of Topbar -->
 
         <!-- Main Body -->
-        <div id="app1" style="max-height: 100vh;max-height:100vh;overflow-y:scroll; overflow-y: hidden;">
+        <div id="app1" style="max-height: 100vh;max-height:100vh;">
             @yield('content')
 
         </div>

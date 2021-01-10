@@ -165,5 +165,15 @@ class CourseController extends Controller
 
             return view('course.allCoursesView',compact('courses'));
     }
+    public function top_courses(){
+        $top_courses=Course::orderBy('student_count', 'DESC')->take(10)->get();
+        return response(['top_courses'=>$top_courses]);
+    }
+    public function selected_course_lessons($id){
+        $selected_course_lessons=CourseLesson::where('course_id',$id)->get();
+        // dd($selected_course_lessons);
+        return view('student.courseLessonsView',compact('selected_course_lessons'));
+
+    }
 
 }

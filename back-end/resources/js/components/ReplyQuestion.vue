@@ -27,7 +27,7 @@
             <button class="text-center btn btn-success form-group " style="padding-left:10rem;padding-right:10rem;"  type="submit">Submit</button>
             <a v-if="next" href="/question-list" class="btn btn-success form-group" style="padding-left:10rem;padding-right:10rem;" > Go Back ></a>
         </div>
-     </form>
+    </form>
   </div>
 </template>
 

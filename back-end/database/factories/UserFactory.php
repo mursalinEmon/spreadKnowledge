@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\User;
+use App\StudentProfile;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
@@ -19,8 +20,9 @@ use Illuminate\Support\Facades\Hash;
 */
 
 $factory->define(User::class, function (Faker $faker) {
-    $num=rand(1,2);
-    $type=$num == 1? "student":"contributor";
+    // $num=rand(1,2);
+    // $type=$num == 1? "student":"contributor";
+    $type = "student";
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -29,4 +31,11 @@ $factory->define(User::class, function (Faker $faker) {
         'type'=>$type,
         'remember_token' => Str::random(10),
     ];
+});
+
+$factory->afterCreating(App\User::class, function ($user, $faker) {
+    $studentprofile=StudentProfile::create([
+        'user_id'=>$user->id,
+        'enrolled_courses'=>[],
+    ]);
 });

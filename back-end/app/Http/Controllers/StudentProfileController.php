@@ -15,7 +15,16 @@ class StudentProfileController extends Controller
      */
     public function index()
     {
-        return view('student.student_dashboard');
+
+        $student = StudentProfile::where('user_id',auth()->user()->id)->first();
+
+        // $student = StudentProfile::findOrFail(auth()->user()->id);
+
+        $courses=$student->enrolled_courses;
+
+        $enrolled_course_count=count($courses);
+
+        return view('student.student_dashboard',compact('enrolled_course_count'));
     }
 
     /**
@@ -99,7 +108,18 @@ class StudentProfileController extends Controller
         ]);
 
         return back()->with(['message'=>'enrolled successfully']);
+    }
 
+    public function enrolled_Courses($id){
+        $student = StudentProfile::where('user_id',auth()->user()->id)->get()->first();
+        $courses = $student->enrolled_courses;
+        $enrolled_courses=[];
+        foreach($courses as $course_id ){
+            $course = Course::findOrFail($course_id);
+            array_push($enrolled_courses,$course);
+        }
 
+        // dd($enrolled_courses);
+        return view('student.enrolledCoursesView',compact('enrolled_courses'));
     }
 }

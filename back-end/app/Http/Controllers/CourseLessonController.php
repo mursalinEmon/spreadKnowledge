@@ -93,10 +93,7 @@ class CourseLessonController extends Controller
 
     public function selected_lessons($id){
         $data=CourseLesson::where('course_id',$id)->get();
-<<<<<<< HEAD
-=======
 
->>>>>>> 35e74a4cf460f2604a1d30d7e8ed4afa6797907e
         return response($data);
     }
     public function delete_lesson($id){
@@ -122,5 +119,12 @@ class CourseLessonController extends Controller
 
         return view('course.lessonList',compact('lessons'));
 
+    }
+    public function fetch_body($id){
+        //to fetch lesson body
+        // dd($id);
+        $lesson=CourseLesson::findOrFail($id);
+        $lesson_body=$lesson->lesson_body;
+        return response(['lesson_body'=>$lesson_body]);
     }
 }
