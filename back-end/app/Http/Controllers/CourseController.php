@@ -191,6 +191,7 @@ class CourseController extends Controller
             $temp=$courses->enrolled_courses;
             // dd($temp[0]);
             $temp_arr=array();
+
             foreach($temp as $t){
 
                 foreach($course_list as $key=>$value){
@@ -198,6 +199,7 @@ class CourseController extends Controller
                     if ($t == $key){
                         $t=$value;
                         array_push($temp_arr,$t);
+
                     }
                 }
             }
@@ -212,8 +214,8 @@ class CourseController extends Controller
         $labels  = [];
         $associator->train($samples, $labels);
         $rules=$associator->getRules();
-        dd($rules);
 
+        dd($rules);
 
     }
 }
