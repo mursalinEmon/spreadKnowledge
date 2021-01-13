@@ -8,8 +8,9 @@ use App\SubCategory;
 use App\CourseLesson;
 use App\StudentProfile;
 use Illuminate\Http\Request;
-use Phpml\Association\Apriori;
+use Illuminate\Support\Carbon;
 
+use Phpml\Association\Apriori;
 use Illuminate\Support\Facades\File;
 
 
@@ -191,7 +192,6 @@ class CourseController extends Controller
             $temp=$courses->enrolled_courses;
             // dd($temp[0]);
             $temp_arr=array();
-
             foreach($temp as $t){
 
                 foreach($course_list as $key=>$value){
@@ -199,7 +199,6 @@ class CourseController extends Controller
                     if ($t == $key){
                         $t=$value;
                         array_push($temp_arr,$t);
-
                     }
                 }
             }
@@ -214,8 +213,12 @@ class CourseController extends Controller
         $labels  = [];
         $associator->train($samples, $labels);
         $rules=$associator->getRules();
-
         dd($rules);
 
+
+    }
+    public function top_course_month(){
+        $top_courses=Course::orderBy('student_count', 'DESC')->whereMonth('created_at', Carbon::now()->month)->get();
+        dd($top_courses);
     }
 }
