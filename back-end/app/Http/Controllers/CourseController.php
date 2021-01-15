@@ -205,15 +205,22 @@ class CourseController extends Controller
             array_push($enrolled_courses,$temp_arr);
             $temp_arr=[];
         }
-        // dd($enrolled_courses);
-
-        $associator = new Apriori($support = 0.2, $confidence = 0.5);
+        $associator = new Apriori($support = 0.2, $confidence = 0.2);
         $samples = $enrolled_courses;
-        // $samples = [['alpha', 'beta', 'epsilon'], ['alpha', 'beta', 'theta'], ['alpha', 'beta', 'epsilon'], ['alpha', 'beta', 'theta']];
+
         $labels  = [];
         $associator->train($samples, $labels);
-        $rules=$associator->getRules();
-        dd($rules);
+        $frequent=$associator->apriori();
+        $recomendation=[];
+        for($i=2; $i<=count($frequent);$i++){
+           $temp= $frequent[$i];
+           foreach($temp as $item){
+                array_push($recomendation,$item);
+           }
+        }
+        dd($recomendation);
+
+
 
 
     }
