@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\StudentProfile;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,7 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function student_profile()
     {
-        return $this->hasOne('App\StudentProfile');
+        return $this->hasOne(StudentProfile::class,'user_id','id');
     }
     public function contributor_profile()
     {

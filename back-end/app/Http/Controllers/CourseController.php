@@ -218,14 +218,49 @@ class CourseController extends Controller
                 array_push($recomendation,$item);
            }
         }
-        dd($recomendation);
-
-
+        // dd($recomendation);
+        $taken_courses_names=[];
+        $recomendation_for_you=[];
+        $final_rec=[];
+        $final_recomendation_list=[];
+        $taken_courses=StudentProfile::where('user_id',auth()->user()->id)->get();
+        $taken_courses= $taken_courses[0]->enrolled_courses;
+        foreach(  $taken_courses as $course){
+            $course_name=Course::findOrfail($course);
+            array_push( $taken_courses_names,$course_name->course_title );
+        }
+        // dd($taken_courses_names);
+        foreach($taken_courses_names as $course){
+            foreach($recomendation as $rec){
+                // dd($rec);
+                if(in_array($course, $rec)){
+                    array_push($recomendation_for_you,$rec);
+                    // $recomendation_for_you=array_unique( $recomendation_for_you);
+                }
+            }
+        }
+        foreach($recomendation_for_you as $rec){
+            $final_rec = array_merge(  $final_rec,$rec);
+        }
+        $final_rec =array_unique( $final_rec );
+        // dd($recomendation_for_you,$taken_courses_names);
+        foreach( $taken_courses_names as $val){
+            if (($key = array_search( $val, $final_rec )) !== false) {
+                unset($final_rec[$key]);
+            }
+        }
+        foreach(  $final_rec as $rec){
+            $course = Course::where('course_title',$rec)->get();
+            array_push( $final_recomendation_list , $course);
+        }
+        // dd( $final_rec ,$taken_courses_names);
+        // dd($final_recomendation_list );
+        return response(['recomended_courses'=>$final_recomendation_list]);
 
 
     }
     public function top_course_month(){
         $top_courses=Course::orderBy('student_count', 'DESC')->whereMonth('created_at', Carbon::now()->month)->get();
-        dd($top_courses);
+        return response(['top_courses_month'=>$top_courses]);
     }
 }

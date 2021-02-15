@@ -12,9 +12,9 @@
     @endif
 
   <div class="row">
-    <div class="col-md-6 col-lg-6" style="padding-left: 2rem;">
+    <div class="col-md-6 col-lg-6" style="padding-left: auto;margin-left:auto;">
         @foreach ($enrolled_courses as $item)
-        <div class="card mb-4" style="width: 20rem;">
+        <div class="card mb-4" style="width: 22rem;margin-left:auto;margin-right:auto;">
             <img class="card-img-top" src="{{ asset($item->image) }}" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">{{ $item->course_title }}</h5>
@@ -47,8 +47,7 @@
       </div>
         <div id="app1" class="col-md-6 col-lg-6">
             {{-- <create-post></create-post> --}}
-            <h4>Top Courses</h4>
-            <hr>
+
             <course-carousel></course-carousel>
         </div>
   </div>

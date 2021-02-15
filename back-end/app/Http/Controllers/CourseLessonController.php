@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\CourseLesson;
 use Illuminate\Http\Request;
 use SebastianBergmann\Environment\Console;
@@ -116,7 +117,7 @@ class CourseLessonController extends Controller
     }
     public function view_lessons($id){
         $lessons=CourseLesson::where('course_id',$id)->paginate(5);
-
+        // dd($lessons);
         return view('course.lessonList',compact('lessons'));
 
     }
@@ -126,5 +127,15 @@ class CourseLessonController extends Controller
         $lesson=CourseLesson::findOrFail($id);
         $lesson_body=$lesson->lesson_body;
         return response(['lesson_body'=>$lesson_body]);
+    }
+
+    public function create_course_lesson($id){
+        $course = Course::findOrFail($id);
+        // dd($course);
+        // $course_id=$course->id;
+        // // dd($course_id);
+        // $course_name=$course->course_title;
+        // // dd($course_name);
+        return view('course.createCourseLesson',compact('course'));
     }
 }

@@ -4,7 +4,7 @@
     <div class="container">
 
         <div class="align-items-right mb-4">
-            <a href="{{ route('courses.view') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Enroll In A Course</a>
+            <a href="{{ route('courses.view') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="cursor: pointer;"><i class="fas fa-plus fa-sm text-white-50"></i> Enroll In A Course</a>
           </div>
 
           <!-- Content Row -->

@@ -4,10 +4,10 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue');
-window.axios = require('axios');
+window.Vue = require("vue");
+window.axios = require("axios");
 
 /**
  * The following block of code may be used to automatically register your
@@ -17,12 +17,22 @@ window.axios = require('axios');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-const files = require.context('./', true, /\.vue$/i)
-files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const files = require.context("./", true, /\.vue$/i);
+files.keys().map(key =>
+    Vue.component(
+        key
+            .split("/")
+            .pop()
+            .split(".")[0],
+        files(key).default
+    )
+);
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead);
-
+Vue.component(
+    "example-component",
+    require("./components/ExampleComponent.vue").default
+);
+Vue.component("vue-bootstrap-typeahead", VueBootstrapTypeahead);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -31,17 +41,19 @@ Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead);
  */
 
 import VueSimpleAlert from "vue-simple-alert";
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
-import 'bootstrap/scss/bootstrap.scss';
-import VueToastr2 from 'vue-toastr-2'
-import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
+import StarRating from "vue-star-rating";
+import "bootstrap/scss/bootstrap.scss";
+import VueToastr2 from "vue-toastr-2";
+import "vue-toastr-2/dist/vue-toastr-2.min.css";
 
-window.toastr = require('toastr')
+window.toastr = require("toastr");
 
-Vue.use(VueToastr2)
+Vue.use(VueToastr2);
 Vue.use(VueSimpleAlert);
 Vue.use(VueBootstrapTypeahead);
+Vue.component("star-rating", StarRating);
 
 const app = new Vue({
-    el: '#app1',
+    el: "#app1"
 });

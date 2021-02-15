@@ -63,6 +63,7 @@ Route::middleware(['verified'])->group(function(){
     Route::get('/get-sub-category','SubCategoryController@index')->name('fetch_sub_category');
     Route::get('/get-selected-sub-categories/{id}','SubCategoryController@find_sub')->name('find.fetch_sub_category');
     Route::post('/create-course-lesson','CourseController@create_lesson')->name('create.lesson');
+    Route::get('/course-lesson/{id}','CourseLessonController@create_course_lesson')->name('course.lesson');
     Route::get('/get-course-lessons','CourseLessonController@find_lessons')->name('get-course-lessons');
     Route::get('/get-selected-course-lessons/{id}','CourseLessonController@selected_lessons')->name('get-selected-course-lessons');
     Route::get('/course-list/{id}','CourseController@course_list')->name('course.list');
@@ -88,9 +89,17 @@ Route::middleware(['verified'])->group(function(){
 
 });
 
+// Rating
+Route::middleware(['verified'])->group(function(){
+    Route::post('/courses/{course}/ratings','RatingController@store')->name('courses.ratings.store');
+    Route::get('/check/rating/{id}','RatingController@check_rating')->name('rating.check');
+});
 
-Route::get('/apriori','CourseController@apriori');
-Route::get('/top-courses-of-the-month','CourseController@top_course_month');
+Route::get('/rating-rec','RatingController@rec')->name('courses.ratings.rec');
+
+
+Route::get('/recomended-courses','CourseController@apriori');
+Route::get('/top-courses-this-month','CourseController@top_course_month');
 Route::get('/contributor_dashboard','HomeController@contributor_dashboard')->name('contributor_dashboard');
 Route::get('/student-dashboard','StudentProfileController@index')->name('student.dashboard');
 Route::get('/courses','CourseController@index')->name('courses.view');
