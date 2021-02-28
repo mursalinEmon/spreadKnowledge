@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\CourseLesson;
+use App\ExamQuestion;
 use Illuminate\Http\Request;
+use App\CourseProgressReport;
 use SebastianBergmann\Environment\Console;
 
 class CourseLessonController extends Controller
@@ -131,11 +133,20 @@ class CourseLessonController extends Controller
 
     public function create_course_lesson($id){
         $course = Course::findOrFail($id);
-        // dd($course);
-        // $course_id=$course->id;
-        // // dd($course_id);
-        // $course_name=$course->course_title;
-        // // dd($course_name);
         return view('course.createCourseLesson',compact('course'));
+    }
+    public function check_eligible($cid,$lid){
+        $lessons_questions=ExamQuestion::all()->where('course_id',$cid)->where('lession_id',$lid);
+        $p_status=CourseProgressReport::where('course_id',$cid)->where('lession_id',$lid)->get();
+
+        if($p_status->isEmpty()){
+            return response(['message'=>'Take The Exam For Next Lesson','questions'=>$lessons_questions]);
+        }else{
+            if($p_status[0]->status==0){
+                return response(['message'=>'Take The Exam Again For Next Lesson','questions'=>$lessons_questions]);
+            }
+        }
+        return response(['message'=>'You are elegible for next lesson','questions'=>[]]);
+
     }
 }

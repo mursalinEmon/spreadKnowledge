@@ -13,7 +13,8 @@
 
         @forelse ($lessons as $item)
             <div class="card">
-                <div class="card-header"> {{ $item->lesson_title }}</div>
+
+                        <div class="card-header"> {{ $item->lesson_title }}</div>
                     <div class="card-body">
                         <div class="d-flex">
                             <form action="{{ route('lesson.delete',$item->id) }}" method="post">
@@ -22,6 +23,7 @@
                                 <button type="submit" class="btn btn-danger mr-2">Delete</button>
                             </form>
                         <a href="{{ route('lesson.edit',$item->id)}}" class="btn btn-warning">Edit</a>
+                        <a href="{{ route('lesson.quiz.create',['course'=>$item->course->id,'courseLesson'=>$item->id]) }}" class="btn btn-primary ml-2">Add Quiz</a>
                         </div>
                     </div>
 

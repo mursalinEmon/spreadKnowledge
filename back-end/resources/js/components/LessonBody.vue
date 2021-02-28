@@ -4,7 +4,7 @@
             <p>lesson List</p>
             <hr>
                 <ul v-for="(lesson,index) in selected_course_lessons" :key="index"  >
-                    <li class="card-header"  @click="fetch_body(lesson.id,index,$event)" :ref="index" >{{ lesson.lesson_title }}</li>
+                    <li class="card-header"  @click="fetch_body(lesson.course_id,lesson.id,index,$event)" :ref="index" >{{ lesson.lesson_title }}</li>
                 </ul>
 
                 <h1 v-if="!selected_course_lessons" class="text-danger">No Lessons to Show...!!</h1>
@@ -59,14 +59,19 @@ created(){
 },
 mounted(){
 
-this.fetch_body(this.selected_course_lessons[0].id);
+this.fetch_body(this.selected_course_lessons[0].course_id,this.selected_course_lessons[0].id,0);
 
 
 let old=this.old;
 this.$refs[old][0].classList.add(['active-class']);
 },
 methods:{
-fetch_body(id,index,event){
+async fetch_body(cid,id,index,event){
+    let pid =id;
+    if(index!=0){
+        await this.check_elegible(cid,id);
+    }
+
 
 if (this.count>0){
     this.$refs.[this.old][0].classList.remove(['active-class']);
@@ -76,10 +81,22 @@ if (this.count>0){
     }
 
 
-    axios.get(`/lesson/${id}/body`).then((res)=>{
+    axios.get(`/lesson/${pid}/body`).then((res)=>{
         this.lesson_body=res.data.lesson_body;
         this.count++;
     }).catch((err)=>console.log(err));
+},
+check_elegible(cid,id){
+      axios.get(`/course/${cid}/lesson/${id}/check_status`).then((res)=>{
+            console.log(res);
+            if(res.data.questions.length!=0){
+                this.$confirm(res.data.message).then(text => {
+                       location.replace(`/course-lesson-exam/${cid}/${id}`);  // do somthing with text
+                });
+            }
+
+        }).catch((err)=>{console.log(err);});
+
 },
 manage_modal(){
      this.modal=true;

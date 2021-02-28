@@ -263,4 +263,9 @@ class CourseController extends Controller
         $top_courses=Course::orderBy('student_count', 'DESC')->whereMonth('created_at', Carbon::now()->month)->get();
         return response(['top_courses_month'=>$top_courses]);
     }
+
+    public function fawMethod($id){
+        $selected_course_lessons = CourseLesson::all()->where('course_id',$id);
+        return view('student.courseLessonsView', compact('selected_course_lessons'));
+    }
 }

@@ -14,7 +14,7 @@ class Course extends Model
        return $this->belongsTo(User::class,'contributor_id','id');
     }
     public function lessons(){
-        return $this->hasMany(CourseLesson::class,'course_id');
+        return $this->hasMany(CourseLesson::class,'course_id','id');
         // $this->hasMany('App\CourseLesson');
     }
     public function ratings(){

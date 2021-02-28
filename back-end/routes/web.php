@@ -76,6 +76,19 @@ Route::middleware(['verified'])->group(function(){
     Route::get('/top-course','CourseController@top_courses')->name('top.courses');
     Route::get('/course/{id}/lessons','CourseController@selected_course_lessons')->name('course.lessons');
     Route::get('/lesson/{id}/body','CourseLessonController@fetch_body')->name('lesson.body');
+    Route::get('/course/{cid}/lesson/{lid}/check_status','CourseLessonController@check_eligible')->name('lesson.check.eligible');
+
+    Route::get('/course/{id}/getLessons', 'CourseController@fawMethod');
+
+
+    //lesson quiz
+
+    Route::get('/courses/{course}/courseLessons/{courseLesson}/quiz/create','ExamQuestionController@create')->name('lesson.quiz.create');
+
+    Route::post('/courses/{course}/courseLessons/{courseLesson}/quiz/create','ExamQuestionController@store')->name('lesson.quiz.store');
+    Route::get('/course-lesson-exam/{cid}/{lid}','ExamQuestionController@quwstions_list');
+    Route::post('/course-lesson-exam/{cid}/{lid}/evaluate','ExamQuestionController@evaluate_quiz');
+
 
 });
 // Q&A portal

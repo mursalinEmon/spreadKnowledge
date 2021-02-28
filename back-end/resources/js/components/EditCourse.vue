@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <form class="card-body" @submit.prevent="submitFile()">
+    <form v-if="show" class="card-body" @submit.prevent="submitFile()">
                             <div class="form-group">
                                 <label for="blogTitle">Course Title</label>
                                 <input v-model="title" type="text" class="form-control" id="blogTitle" aria-describedby="emailHelp" placeholder="Title" required>
@@ -76,6 +76,10 @@
 
                         </form>
 
+                        <div v-else>
+                            <design-course :course_name="title"  :course_id="course_id"></design-course>
+                        </div>
+
 </div>
 </template>
 
@@ -101,30 +105,37 @@ created(){
     this.category_id=this.course.category_id;
     this.databaseImage=`../../${this.course.image}`;
 
-
+    this.course_id=this.course.id;
+    // this.course_name=this.$attrs.course_name;
+    console.log(this.course_id);
+    // this.showLessons();
 
     this.fetchTags();
     this.fetchCategories();
     this.push_tags();
 
 },
-data:()=>({
+    data:()=>({
 
-title:"",
-level:"",
-query:"",
-previewImage:null,
-databaseImage:"",
-category_id:null,
-category:"",
-selected_category:"",
-categories:[],
-sub_category:"",
-fetchted_sub_category:"",
-fetchedTags:[],
-tags:[],
-file:"",
-sub_categories:[],
+    title:"",
+    level:"",
+    query:"",
+    previewImage:null,
+    databaseImage:"",
+    category_id:null,
+    category:"",
+    selected_category:"",
+    categories:[],
+    sub_category:"",
+    fetchted_sub_category:"",
+    fetchedTags:[],
+    tags:[],
+    file:"",
+    sub_categories:[],
+    show:'true',
+    course_id:null,
+    course_name:""
+
 
 
 }),
@@ -229,11 +240,16 @@ methods:{
             this.$confirm(`${res.data.message}`).then(() => {
 
               this.reload();
+            //   this.show=false;
 
             });
         }).catch((err)=>{console.log(err);})
 
       },
+
+    //   goToLessons(){
+    //         location.replace(`/course-create/`);
+    //     }
 
 
 
