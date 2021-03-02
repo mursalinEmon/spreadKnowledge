@@ -2007,6 +2007,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2020,13 +2051,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       top_courses: [],
       recomended_courses: [],
-      top_courses_month: []
+      top_courses_month: [],
+      rating_based_courses: []
     };
   },
   created: function created() {
     this.fetch_Top_Courses();
     this.fetch_Recomended_Courses();
     this.fetch_Top_Courses_month();
+    this.fetch_Ratingbased_courses();
   },
   methods: {
     fetch_Top_Courses: function fetch_Top_Courses() {
@@ -2057,6 +2090,15 @@ __webpack_require__.r(__webpack_exports__);
         _this3.top_courses_month = res.data.top_courses_month;
       })["catch"](function (err) {
         console.log(err);
+      });
+    },
+    fetch_Ratingbased_courses: function fetch_Ratingbased_courses() {
+      var _this4 = this;
+
+      axios.get('/rating-rec').then(function (res) {
+        _this4.rating_based_courses = res.data.rating_based_courses;
+      })["catch"](function (err) {
+        return console.log(err);
       });
     }
   }
@@ -61620,6 +61662,73 @@ var render = function() {
             ],
             1
           )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.rating_based_courses.length
+        ? _c(
+            "div",
+            [
+              _c("h4", [_vm._v("Courses You Might Wanna Take")]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "hooper",
+                { attrs: { itemsToShow: 3, pagination: "no" } },
+                [
+                  _vm._l(_vm.rating_based_courses, function(course, index) {
+                    return _c(
+                      "slide",
+                      { key: index, attrs: { index: index } },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "card",
+                            staticStyle: {
+                              width: "10vw",
+                              "margin-right": "1rem"
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "card-img-top card_image",
+                              attrs: {
+                                src: "/" + course.image,
+                                alt: "Card image"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "card-body" }, [
+                              _c("h6", { staticClass: "card-title" }, [
+                                _vm._v(_vm._s(course.course_title))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: { href: "#" }
+                                },
+                                [_vm._v("Brouse Course")]
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("hooper-navigation", {
+                    attrs: { slot: "hooper-addons" },
+                    slot: "hooper-addons"
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          )
         : _vm._e()
     ]
   )
@@ -62265,9 +62374,9 @@ var render = function() {
             ? _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _vm._v(
-                    "\n                " +
+                    "\r\n                " +
                       _vm._s(lesson.lesson_title) +
-                      "\n            "
+                      "\r\n            "
                   )
                 ]),
                 _vm._v(" "),
@@ -64018,7 +64127,9 @@ var render = function() {
         },
         [
           _vm._v(
-            "\n                " + _vm._s(_vm.lesson_body) + "\n            "
+            "\r\n                " +
+              _vm._s(_vm.lesson_body) +
+              "\r\n            "
           )
         ]
       ),
@@ -80597,8 +80708,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Capstone_Project\spread_knowledge2\back-end\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Capstone_Project\spread_knowledge2\back-end\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Shuvo\Desktop\client_projects\mursalin\spread_knowledge2\back-end\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Shuvo\Desktop\client_projects\mursalin\spread_knowledge2\back-end\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

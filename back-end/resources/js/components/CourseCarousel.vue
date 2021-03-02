@@ -79,6 +79,37 @@
             <hooper-navigation slot="hooper-addons"></hooper-navigation>
         </hooper>
       </div>
+
+
+    <div v-if="(rating_based_courses.length)">
+            <h4>Courses You Might Wanna Take</h4>
+        <hr />
+        <hooper :itemsToShow="3" pagination="no">
+            <slide
+                v-for="(course, index) in rating_based_courses"
+                :key="index"
+                :index="index"
+            >
+                <!-- <h6>{{course.course_title}}</h6> -->
+                <div class="card" style="width:10vw;margin-right:1rem;">
+                    <img
+                        class="card-img-top card_image"
+                        :src="'/' + course.image"
+                        alt="Card image"
+                    />
+                    <div class="card-body">
+                        <h6 class="card-title">{{ course.course_title }}</h6>
+                        <a href="#" class="btn btn-primary">Brouse Course</a>
+                    </div>
+                </div>
+            </slide>
+
+            <hooper-navigation slot="hooper-addons"></hooper-navigation>
+        </hooper>
+        </div>
+
+
+
     </div>
 </template>
 
@@ -95,12 +126,15 @@ export default {
     data: () => ({
         top_courses: [],
         recomended_courses: [],
-        top_courses_month: []
+        top_courses_month: [],
+        rating_based_courses: []
+
     }),
     created() {
         this.fetch_Top_Courses();
         this.fetch_Recomended_Courses();
         this.fetch_Top_Courses_month();
+        this.fetch_Ratingbased_courses();
     },
     methods: {
         fetch_Top_Courses() {
@@ -136,6 +170,11 @@ export default {
                 .catch(err => {
                     console.log(err);
                 });
+        },
+        fetch_Ratingbased_courses(){
+            axios.get('/rating-rec').then((res)=>{
+                this.rating_based_courses=res.data.rating_based_courses;
+            }).catch((err)=>console.log(err));
         }
     }
 };

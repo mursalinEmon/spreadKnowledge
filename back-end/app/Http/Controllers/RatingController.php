@@ -133,12 +133,30 @@ class RatingController extends Controller
 
             $re = new Recommend();
             $rec=$re->getRecommendations($student_name_and_ratings, auth()->user()->name);
-            foreach( $enrolled_courses as $val){
-                if (($key = array_search( $val, $rec )) !== false) {
-                    unset($rec[$key]);
+            foreach( $enrolled_courses as $key=>$val){
+                // dd(array_search( $val, $rec ));
+                if (array_search( $val, $rec ) == false) {
+                    // dd($rec[$key]);
+                    unset($rec[$val]);
                 }
             }
-            dd($rec);
+            // dd($rec);
+            foreach($rec as $key=>$val){
+                    if($val<4){
+                        // dd($rec[$key]);
+                        unset($rec[$key]);
+                    }
+                    // dd($val);
+            }
+            $crs=new Course();
+            $final_rec=[];
+            foreach($rec as $key=>$val){
+                $temp=$crs->where('course_title',$key)->first();
+                array_push($final_rec,$temp);
+
+            }
+            // dd($final_rec);
+            return response(['rating_based_courses'=>$final_rec]);
        }else{
            return response[null];
        }
