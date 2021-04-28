@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Category;
+use App\CourseProgressReport;
 use App\SubCategory;
 use App\CourseLesson;
 use App\StudentProfile;
@@ -267,5 +268,26 @@ class CourseController extends Controller
     public function fawMethod($id){
         $selected_course_lessons = CourseLesson::all()->where('course_id',$id);
         return view('student.courseLessonsView', compact('selected_course_lessons'));
+    }
+    public function filtered_courses($id){
+            $flt_courses=Course::all()->where('category_id',$id);
+            return response(['f_courses'=>$flt_courses]);
+    }
+    public function course_performance(){
+        $courses_models=[];
+        $progress_report=[];
+        $courses=StudentProfile::where('user_id',auth()->user()->id)->get('enrolled_courses');
+        $courses=$courses[0]->enrolled_courses;
+
+        foreach ($courses as $course){
+            $lesson_count=CourseLesson::where('course_id',$course)->get()->count();
+            $course_model=Course::findOrFail($course);
+            array_push($courses_models,$course_model);
+            $passed_lessons_count=CourseProgressReport::where('course_id',$course)->where('status',1)->get()->count();
+            $completed=( $passed_lessons_count/$lesson_count )*100;
+            $progress_report[$course]=$completed;
+        }
+
+        return view('student.course_performance',compact('progress_report','courses_models'));
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\CareerPath;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,6 +61,8 @@ Route::middleware(['verified'])->group(function(){
     Route::delete('/courses/{course}','CourseController@destroy')->name('course.delete');
 
     Route::get('/category/{id}','CategoryController@show')->name('category.list');
+    Route::get('/categories','CategoryController@index');
+
     Route::get('/get-sub-category','SubCategoryController@index')->name('fetch_sub_category');
     Route::get('/get-selected-sub-categories/{id}','SubCategoryController@find_sub')->name('find.fetch_sub_category');
     Route::post('/create-course-lesson','CourseController@create_lesson')->name('create.lesson');
@@ -79,6 +82,10 @@ Route::middleware(['verified'])->group(function(){
     Route::get('/course/{cid}/lesson/{lid}/check_status','CourseLessonController@check_eligible')->name('lesson.check.eligible');
 
     Route::get('/course/{id}/getLessons', 'CourseController@fawMethod');
+    Route::get('/filtered-course/{id}', 'CourseController@filtered_courses');
+    Route::get('/course-performance', 'CourseController@course_performance')->name('course.performance');
+
+
 
 
     //lesson quiz
@@ -108,7 +115,26 @@ Route::middleware(['verified'])->group(function(){
     Route::get('/check/rating/{id}','RatingController@check_rating')->name('rating.check');
 });
 
+
+
+
+
+// CareerPath
+
+Route::middleware(['verified'])->group(function(){
+    Route::get('/careet-path-create','CareerPathController@create')->name('careetpath.create');
+    Route::post('/careet-path-create','CareerPathController@store')->name('careetpath.store');
+    Route::post('/careet-path-update/{id}','CareerPathController@update')->name('careetpath.upate');
+
+
+
+});
+
 Route::get('/rating-rec','RatingController@rec')->name('courses.ratings.rec');
+
+
+//paper statics function of hybrid recomendation
+Route::get('/hybrid-rec','RatingController@hybrid_rec');
 
 
 Route::get('/recomended-courses','CourseController@apriori');

@@ -136,17 +136,9 @@ export default {
     created(){
         this.fetchTags();
        this.fetch_sub_category();
-    //    if (this.updated_message){
-    //          this.$alert(
-    //           this.updated_message,
-    //           "",
-    //           "success"
-    //         )
-    //    }
+
     },
-    //  updated(){
-    //     this.next="true";
-    // },
+
     methods:{
         processFile(){
 
