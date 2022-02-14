@@ -1,4 +1,4 @@
-@extends('layouts.theme')
+@extends('student.studenttheme')
 
 @section('content')
     <div class="container">
@@ -81,12 +81,12 @@
 
               <!-- Tag Info Row -->
 
-          <div class="align-items-right mb-4">
+          <!-- <div class="align-items-right mb-4">
             <a href="{{ route('tag.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Create New Tag</a>
-          </div>
+          </div> -->
 
           <!-- Tag info Row -->
-          <div class="row">
+          <!-- <div class="row">
 
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
@@ -160,7 +160,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
 
     </div>

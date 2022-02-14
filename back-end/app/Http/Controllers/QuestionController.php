@@ -64,7 +64,7 @@ class QuestionController extends Controller
     public function show($id)
     {
         $question = Question::findOrFail($id);
-        $answers=Answer::where('answer_for_question',$question->id)->get();
+        $answers=Answer::where('answer_for_question',$question->id)->latest()->get();
         $answers=$answers?$answers:[];
         // dd($answers);
         return view('Q&A.questionShow',compact('question','answers'));

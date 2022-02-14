@@ -14,7 +14,7 @@ class QuestionAndAnswerController extends Controller
      */
     public function index()
     {
-        //
+        return view('QnA.qnaportal');
     }
 
     /**

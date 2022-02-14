@@ -15,6 +15,11 @@
                     <vue-editor v-model="content" />
             </div>
             <div class="form-group">
+                <label for="topicTitle">Lesson Video</label>
+                <input v-model="link" type="text" class="form-control" id="video_link" aria-describedby="emailHelp" placeholder="Video Link" required>
+
+            </div>
+            <div class="form-group">
                 <div>
                     <button type="submit" value="submit" class="btn btn-primary">Update</button>
                 </div>
@@ -40,6 +45,7 @@ export default {
     created(){
         this.content = this.lesson.lesson_body;
         this.title=this.lesson.lesson_title;
+        this.link=this.lesson.link;
         this.id=this.lesson.id;
         this.course_id=this.lesson.course_id;
     },
@@ -47,6 +53,7 @@ export default {
     content:"",
     title:"",
     id:"",
+    link:"",
     course_id:"",
     url:"/course_lessons/",
     hide:false
@@ -56,6 +63,7 @@ export default {
             let formData = new FormData();
             formData.append('lesson_body', this.content);
             formData.append('lesson_title', this.title);
+            formData.append('link', this.link);
             formData.append('id', this.id);
 
             axios.post('/update-lesson',

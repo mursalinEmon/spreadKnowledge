@@ -15,6 +15,11 @@
                     <vue-editor v-model="content" />
             </div>
             <div class="form-group">
+                <label for="topicTitle">Lesson Video</label>
+                <input v-model="video_link" type="text" class="form-control" id="video_link" aria-describedby="emailHelp" placeholder="Video Link" required>
+
+            </div>
+            <div class="form-group">
                 <div>
                     <button type="submit" value="submit" class="btn btn-primary">Submit</button>
                 </div>
@@ -65,6 +70,7 @@ export default {
         fetched_lessons:"",
         course_lessons:[],
         course_name:"",
+        video_link:"",
         options:{
             closeMethod :'fadeOut',
             closeDuration:300,
@@ -83,11 +89,13 @@ export default {
                     formData.append('course_id', this.course_id);
                     formData.append('topic_title', this.title);
                     formData.append('topic_body', this.content);
+                    formData.append('video_link', this.video_link);
 
                     axios.post('/create-course-lesson',formData).then((res)=>{
                         this.showLessons();
                         this.title="";
                         this.content="";
+                        this.video_link="";
                         this.$alert(
                                 res.data.message,
                                 "",

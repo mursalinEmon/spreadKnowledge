@@ -9,10 +9,21 @@
 
                 <h1 v-if="!selected_course_lessons" class="text-danger">No Lessons to Show...!!</h1>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card-body body" v-html="lesson_body">
                 {{ lesson_body }}
+            
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-center align-items-center frame" v-html="link">
+                        {{ link }}
+                         <!-- <iframe width="90%" height="515" src="https://www.youtube.com/embed/NyDT3KkscSk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                    </div>
+                </div>
+            </div>
+
+            
                 <div v-if="modal" class="modal">
                    <div class="rating">
                        <h2>Do You Want To Rate This Course ?</h2>
@@ -25,7 +36,7 @@
 
                 </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
 
         </div>
 
@@ -46,6 +57,7 @@ data:()=>{
     return{
         lessons:[],
         lesson_body:"",
+        link:"",
         count:0,
         old:0,
         new:null,
@@ -56,6 +68,7 @@ data:()=>{
 },
 created(){
     this.check_Rating();
+    
 },
 mounted(){
 
@@ -73,6 +86,8 @@ async fetch_body(cid,id,index,event){
     }
 
 
+
+
 if (this.count>0){
     this.$refs.[this.old][0].classList.remove(['active-class']);
     this.new=index;
@@ -83,6 +98,7 @@ if (this.count>0){
 
     axios.get(`/lesson/${pid}/body`).then((res)=>{
         this.lesson_body=res.data.lesson_body;
+        this.link=res.data.link;
         this.count++;
     }).catch((err)=>console.log(err));
 },
@@ -169,5 +185,7 @@ li{
     margin-left: 25%;
 
 }
-
+.frame>iframe{
+    width: 100%!important;
+}
 </style>

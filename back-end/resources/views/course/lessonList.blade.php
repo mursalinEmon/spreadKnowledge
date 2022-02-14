@@ -37,5 +37,5 @@
 </div>
 <br>
 <br>
-<a href="{{ route('course.lesson',$item->course_id ?? '') }}" style="float: right; margin-right:5vw;" class="btn btn-primary">Add more lessons</a>
+<a href="{{ route('course.lesson',$item->course_id ?? $id) }}" style="float: right; margin-right:5vw;" class="btn btn-primary">Add more lessons</a>
 @endsection

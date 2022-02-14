@@ -22,6 +22,7 @@ class SubCategoryController extends Controller
     public function find_sub($id){
         $data=SubCategory::where('category_id',$id)->get();
         return response($data);
+        
     }
 
     /**

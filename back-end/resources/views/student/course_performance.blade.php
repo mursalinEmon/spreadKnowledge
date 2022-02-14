@@ -15,7 +15,7 @@
 
                 @forelse($courses_models as $course)
                     <tr>
-                    <td><img src="{{asset($course->image)}}" alt=""></td>
+                    <td><img src="{{asset($course->image)}}" style="height: 80px;width:80px;" alt=""></td>
                     <td>{{$course->course_title}}</td>
                 @if($progress_report[$course->id]==100.00)
                     <td>Completed</td>
